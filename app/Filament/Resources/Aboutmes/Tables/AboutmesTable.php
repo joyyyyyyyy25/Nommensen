@@ -3,10 +3,11 @@
 namespace App\Filament\Resources\Aboutmes\Tables;
 
 use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
 
 class AboutmesTable
@@ -15,37 +16,30 @@ class AboutmesTable
     {
         return $table
             ->columns([
-                TextColumn::make('content')
-                    ->label('Konten')
-                    ->limit(60)
-                    ->wrap()
-                    ->searchable(),
-                TextColumn::make('image')
-                    ->label('Gambar')
-                    ->formatStateUsing(function ($state): string {
-                        if (is_array($state)) {
-                            return count($state) . ' item';
-                        }
+                // ✅ tampilkan gambar + perbaikan disk
+                ImageColumn::make('image')
+                    ->label('Image')
+                    ->disk('public') // penting untuk ambil dari storage
+                    ->height(60),     // biar tidak terlalu besar
 
-                        return (string) $state;
-                    })
-                    ->limit(40)
-                    ->wrap(),
+                // ✅ tanggal dibuat
                 TextColumn::make('created_at')
+                    ->label('Created At')
                     ->dateTime()
-                    ->sortable()
-                    ->toggleable(),
+                    ->sortable(),
+
+                // ✅ tanggal update
                 TextColumn::make('updated_at')
+                    ->label('Updated At')
                     ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->recordActions([
+                ViewAction::make(),
                 EditAction::make(),
-                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
