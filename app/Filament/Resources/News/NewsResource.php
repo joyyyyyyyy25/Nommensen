@@ -19,7 +19,7 @@ class NewsResource extends Resource
 {
     protected static ?string $model = News::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedNewspaper;
 
     protected static UnitEnum|string|null $navigationGroup = 'Publikasi';
 
@@ -27,7 +27,11 @@ class NewsResource extends Resource
 
     protected static ?string $navigationLabel = 'Berita';
 
-    protected static ?string $recordTitleAttribute = 'News';
+    protected static ?string $modelLabel = 'Berita';
+
+    protected static ?string $pluralModelLabel = 'Berita';
+
+    protected static ?string $recordTitleAttribute = 'title';
 
     public static function form(Schema $schema): Schema
     {
@@ -41,17 +45,15 @@ class NewsResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => ListNews::route('/'),
+            'index'  => ListNews::route('/'),
             'create' => CreateNews::route('/create'),
-            'edit' => EditNews::route('/{record}/edit'),
+            'edit'   => EditNews::route('/{record}/edit'),
         ];
     }
 }

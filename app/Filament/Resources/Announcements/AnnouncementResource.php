@@ -14,12 +14,13 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 
 class AnnouncementResource extends Resource
 {
     protected static ?string $model = Announcement::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedMegaphone;
 
     protected static UnitEnum|string|null $navigationGroup = 'Publikasi';
 
@@ -27,7 +28,11 @@ class AnnouncementResource extends Resource
 
     protected static ?string $navigationLabel = 'Pengumuman';
 
-    protected static ?string $recordTitleAttribute = 'Announcement';
+    protected static ?string $modelLabel = 'Pengumuman';
+
+    protected static ?string $pluralModelLabel = 'Pengumuman';
+
+    protected static ?string $recordTitleAttribute = 'title';
 
     public static function form(Schema $schema): Schema
     {
@@ -41,17 +46,15 @@ class AnnouncementResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => ListAnnouncements::route('/'),
+            'index'  => ListAnnouncements::route('/'),
             'create' => CreateAnnouncement::route('/create'),
-            'edit' => EditAnnouncement::route('/{record}/edit'),
+            'edit'   => EditAnnouncement::route('/{record}/edit'),
         ];
     }
 }
