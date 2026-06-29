@@ -25,7 +25,7 @@ class LandingpageController extends Controller
     public function index()
     {
         $cooperations = Cooperation::all();
-        $greeting     = Greeting::first();
+        $greeting = Greeting::query()->first();
         $facilities   = Facility::all();
         $visimisi     = Visimisi::first();
         $rektors      = Rektor::orderBy('id', 'asc')->get();
@@ -72,13 +72,13 @@ class LandingpageController extends Controller
         $footer   = Footer::first();
 
         return view('profile', compact(
-            'aboutme',
-            'history',
-            'visimisi',
-            'rektors',
-            'admins',
-            'footer'
-        ));
+    'aboutme',
+    'history',
+    'visimisi',
+    'rektors',
+    'admins',
+    'footer'
+));
     }
 
     /**
